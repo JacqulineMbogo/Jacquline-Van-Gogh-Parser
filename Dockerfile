@@ -25,7 +25,7 @@ WORKDIR /app
 COPY . .
 
 # Build application
-RUN ./gradlew build --no-daemon
+RUN ./gradlew build --no-daemon --stacktrace
 
 # Run application
 CMD ["java", "-jar", "build/libs/Jacquline-Van-Gogh-Parser.jar"]

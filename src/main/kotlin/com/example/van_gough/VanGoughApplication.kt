@@ -17,21 +17,12 @@ class VanGoughApplication
 
 fun main(args: Array<String>) {
 	System.setProperty("webdriver.chrome.driver", System.getenv("CHROMEDRIVER_PATH") ?: "/usr/bin/chromedriver")
-
 	runApplication<VanGoughApplication>(*args)
 }
 @Service
 class ResultParser {
 	fun parseResult(htmlFilePath: String): List<ResultItem> {
-		// Since Docker won’t have a GUI, you must run Chrome in headless mode
-		val options = ChromeOptions().apply {
-			addArguments("--headless=new")
-			addArguments("--no-sandbox")
-			addArguments("--disable-dev-shm-usage")
-			addArguments("--disable-gpu")
-			addArguments("--window-size=1920,1080")
-		}
-		val driver: WebDriver = ChromeDriver(options)
+		val driver: WebDriver = ChromeDriver()
 		val results = mutableListOf<ResultItem>()
 
 		try {
