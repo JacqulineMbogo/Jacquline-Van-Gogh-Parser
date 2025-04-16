@@ -2,8 +2,6 @@ services:
   app:
     build: .
     container_name: van-gogh-parser
-    environment:
-      - CHROMEDRIVER_PATH=/usr/bin/chromedriver
     ports:
       - "8080:8080"
     volumes:

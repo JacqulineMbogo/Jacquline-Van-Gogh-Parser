@@ -2,48 +2,52 @@ package com.example.van_gough
 
 import org.openqa.selenium.By
 import org.openqa.selenium.WebDriver
-import org.openqa.selenium.WebElement
+
 import org.openqa.selenium.chrome.ChromeDriver
 import org.openqa.selenium.chrome.ChromeOptions
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 import org.springframework.stereotype.Service
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.openqa.selenium.support.ui.WebDriverWait
+import org.openqa.selenium.support.ui.ExpectedConditions
+import java.time.Duration
+
 import java.io.File
 
 @SpringBootApplication
 class VanGoughApplication
 
 fun main(args: Array<String>) {
-	System.setProperty("webdriver.chrome.driver", System.getenv("CHROMEDRIVER_PATH") ?: "/usr/bin/chromedriver")
+	System.setProperty("webdriver.chrome.driver","/usr/local/bin/chromedriver")
 	runApplication<VanGoughApplication>(*args)
 }
 @Service
 class ResultParser {
 	fun parseResult(htmlFilePath: String): List<ResultItem> {
-
-		val chromeVersion = ProcessBuilder("google-chrome", "--version")
-			.start()
-			.inputStream.bufferedReader().readText()
-		println("Chrome version: $chromeVersion")
-
 		val options = ChromeOptions()
 		options.addArguments("--headless")
 		options.addArguments("--no-sandbox")
 		options.addArguments("--disable-dev-shm-usage")
-		options.addArguments("--disable-gpu")
-		options.addArguments("--remote-allow-origins=*")
+
 		val driver: WebDriver = ChromeDriver(options)
 		val results = mutableListOf<ResultItem>()
 
 		try {
 			val fileUrl = File(htmlFilePath).toURI().toString()
+
+			//Validate the file before trying to parse it:
+			if (!File(htmlFilePath).exists()) {
+				throw IllegalArgumentException("HTML file not found: $htmlFilePath")
+			}
+
 			driver.get(fileUrl)
 
 			// Wait for page to render
-			Thread.sleep(2000)
+			// The `Thread.sleep(2000)` is used to wait for the page rendering. This is a blocking method that can unnecessarily delay execution, especially as the page load time may vary. Using WebDriver's explicit waits (e.g., `WebDriverWait`) is a better alternative.
+			//Thread.sleep(2000)
+
+			val wait = WebDriverWait(driver, Duration.ofSeconds(10))
+			wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("div.Cz5hV > div")))
 
 			// Find the parent
 			val resultElements = driver.findElements(By.cssSelector("div.Cz5hV > div"))
