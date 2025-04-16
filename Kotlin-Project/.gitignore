@@ -1,0 +1,50 @@
+# Gradle
+.gradle/
+build/
+out/
+
+# Kotlin specific
+*.kotlin_modules
+*.kotlin_bin/
+*.idea/
+
+# IntelliJ IDEA
+Kotlin-Project/.idea/
+*.iml
+
+# Build directory
+/build/
+# Gradle Wrapper files
+.gradle/
+
+# Log files
+*.log
+
+# IntelliJ IDEA project files
+*.ipr
+*.iws
+Kotlin-Project/.idea/
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Windows Installer files
+ehthumbs.db
+
+# macOS Finder directory settings
+.AppleDouble
+.LSOverride
+
+# Spring Boot
+spring.log
+
+# Generated files
+*.jar
+*.war
+*.ear
+
+# Other generated files
+*.class
+*.war
+*.ear

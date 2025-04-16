@@ -17,7 +17,7 @@ COPY build.gradle settings.gradle ./
 RUN ./gradlew dependencies --stacktrace
 
 # Copy the application source code
-COPY src ./src
+COPY ../src ./src
 
 # Build the application
 RUN ./gradlew bootJar

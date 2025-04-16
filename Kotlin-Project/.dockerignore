@@ -3,4 +3,4 @@ build
 .idea
 .git
 gradlew
-gradle
+Kotlin-Project/gradle

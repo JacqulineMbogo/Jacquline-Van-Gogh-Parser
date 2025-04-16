@@ -15,7 +15,7 @@ class VanGoughApplicationTests {
 
 	@Test
 	fun `test parser returns result from sample HTML`() {
-		val file = File("files/test.html")
+		val file = File("../files/test.html")
 		assertTrue(file.exists(), "Test HTML file should exist")
 
 		val results = parser.parseResult(file.absolutePath)
@@ -31,7 +31,7 @@ class VanGoughApplicationTests {
 
 	@Test
 	fun `test parser throws exception when file does not exist`() {
-		val invalidPath = "files/non_existent.html"
+		val invalidPath = "../files/non_existent.html"
 
 		val exception = assertThrows(IllegalArgumentException::class.java) {
 			parser.parseResult(invalidPath)

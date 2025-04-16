@@ -1,6 +1,6 @@
 services:
   app:
-    build: .
+    build: ..
     container_name: van-gogh-parser
     ports:
       - "8080:8080"
