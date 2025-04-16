@@ -4,6 +4,7 @@ import org.openqa.selenium.By
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.WebElement
 import org.openqa.selenium.chrome.ChromeDriver
+import org.openqa.selenium.chrome.ChromeOptions
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 import org.springframework.stereotype.Service
@@ -22,7 +23,19 @@ fun main(args: Array<String>) {
 @Service
 class ResultParser {
 	fun parseResult(htmlFilePath: String): List<ResultItem> {
-		val driver: WebDriver = ChromeDriver()
+
+		val chromeVersion = ProcessBuilder("google-chrome", "--version")
+			.start()
+			.inputStream.bufferedReader().readText()
+		println("Chrome version: $chromeVersion")
+
+		val options = ChromeOptions()
+		options.addArguments("--headless")
+		options.addArguments("--no-sandbox")
+		options.addArguments("--disable-dev-shm-usage")
+		options.addArguments("--disable-gpu")
+		options.addArguments("--remote-allow-origins=*")
+		val driver: WebDriver = ChromeDriver(options)
 		val results = mutableListOf<ResultItem>()
 
 		try {

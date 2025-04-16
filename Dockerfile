@@ -1,31 +1,24 @@
 FROM eclipse-temurin:17-jdk
 
-# Install Chrome & ChromeDriver dependencies
+# Install dependencies needed for Selenium (e.g., Chrome and ChromeDriver)
 RUN apt-get update && apt-get install -y \
-    wget \
-    curl \
-    unzip \
-    gnupg \
-    ca-certificates \
-    fonts-noto \
-    chromium-driver \
     chromium \
+    chromium-driver \
+    bash \
+    curl \
     --no-install-recommends && \
     rm -rf /var/lib/apt/lists/*
 
-# Set Chrome env vars
-ENV CHROME_BIN=/usr/bin/chromium
-ENV CHROMEDRIVER_PATH=/usr/bin/chromedriver
-ENV PATH=$PATH:/usr/bin
 
-# Create and set working directory
+ENV CHROME_BIN=/usr/bin/chromium-browser
+ENV CHROMEDRIVER=/usr/bin/chromedriver
+
+# Set working directory
 WORKDIR /app
-
-# Copy source
 COPY . .
 
-# Build application
-RUN ./gradlew build --no-daemon --stacktrace
+# Build the application
+RUN ./gradlew build --no-daemon
 
-# Run application
-CMD ["java", "-jar", "build/libs/Jacquline-Van-Gogh-Parser.jar"]
+# Run the application
+CMD ["java", "-jar", "build/libs/ van-gough-0.0.1-SNAPSHOT.jar"]
